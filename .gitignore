@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+
+# Vercel CLI (if used)
+.vercel
+
+# dotenv environment files (if you add secrets later)
+.env
