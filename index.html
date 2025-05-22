@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastel Art Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+    }
+    .sold-out::before {
+      content: "Sold Out";
+      position: absolute;
+      top: 0.5rem;
+      left: -2.5rem;
+      background-color: #fbb6ce;
+      color: white;
+      transform: rotate(-45deg);
+      padding: 0.25rem 2rem;
+      font-size: 0.75rem;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      animation: pulse-banner 2s infinite ease-in-out;
+    }
+    @keyframes pulse-banner {
+      0%, 100% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-45deg) scale(1.05); }
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .lightbox img {
+      max-height: 80vh;
+      max-width: 90vw;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    .lightbox-description {
+      color: white;
+      margin-top: 1rem;
+      text-align: center;
+      max-width: 80%;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="bg-pink-50 text-gray-800">
+  <header class="text-center py-10" data-aos="fade-down">
+    <h1 class="text-5xl text-pink-800 tracking-wide">Art by [Your Name]</h1>
+    <p class="text-md text-pink-600 mt-2">A minimalist pastel gallery of emotions on canvas.</p>
+  </header>
+
+  <main class="px-4 md:px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-16">
+    <!-- Painting Card -->
+    <div class="relative bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer" data-aos="zoom-in" data-aos-delay="100" onclick="openLightbox('https://via.placeholder.com/800x1000', 'A gentle reminder of spring in bloom')">
+      <img src="https://via.placeholder.com/400x500" alt="Art 1" class="w-full h-auto">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold">Whispers of Spring</h2>
+        <p class="text-sm text-gray-500">Oil on Canvas</p>
+      </div>
+    </div>
+
+    <!-- Sold Out Painting Card -->
+    <div class="relative bg-white rounded-xl shadow-md overflow-hidden sold-out card cursor-pointer" data-aos="zoom-in" data-aos-delay="200" onclick="openLightbox('https://via.placeholder.com/800x1000', 'Melancholy tones fading into silence')">
+      <img src="https://via.placeholder.com/400x500" alt="Art 2" class="w-full h-auto">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold">Faded Echoes</h2>
+        <p class="text-sm text-gray-500">Watercolor</p>
+      </div>
+    </div>
+
+    <!-- Add more cards as needed -->
+  </main>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox flex" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Enlarged painting">
+    <div id="lightbox-desc" class="lightbox-description"></div>
+  </div>
+
+  <footer class="text-center text-xs text-gray-400 pb-6" data-aos="fade-up" data-aos-delay="300">
+    © 2025 [Your Name]. All rights reserved.
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    function openLightbox(src, desc) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-desc').textContent = desc || '';
+      document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
