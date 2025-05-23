@@ -47,32 +47,53 @@
       background: rgba(0, 0, 0, 0.75);
       justify-content: center;
       align-items: center;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    .lightbox-content {
+      display: flex;
       flex-direction: column;
+      background: white;
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      animation: slideIn 0.4s ease forwards;
+    }
+    @media(min-width: 768px) {
+      .lightbox-content {
+        flex-direction: column;
+        scroll-behavior: smooth;
+      }
     }
     .lightbox img {
-      max-height: 80vh;
-      max-width: 90vw;
-      border-radius: 0.5rem;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      width: 100%;
+      height: auto;
+      object-fit: cover;
     }
     .lightbox-description {
-      color: white;
-      margin-top: 1rem;
-      text-align: center;
-      max-width: 80%;
-      font-size: 0.9rem;
+      padding: 1.5rem;
+      background-color: #fff0f5;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
 <body class="bg-pink-50 text-gray-800">
   <header class="text-center py-10" data-aos="fade-down">
-    <h1 class="text-5xl text-pink-800 tracking-wide">Art by [Your Name]</h1>
+    <h1 class="text-5xl text-pink-800 tracking-wide">Art by Rusha</h1>
     <p class="text-md text-pink-600 mt-2">A minimalist pastel gallery of emotions on canvas.</p>
   </header>
 
   <main class="px-4 md:px-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pb-16">
     <!-- Painting Card -->
-    <div class="relative bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer" data-aos="zoom-in" data-aos-delay="100" onclick="openLightbox('https://via.placeholder.com/800x1000', 'A gentle reminder of spring in bloom')">
+    <div class="relative bg-white rounded-xl shadow-md overflow-hidden card cursor-pointer" data-aos="zoom-in" data-aos-delay="100" onclick="openLightbox('https://via.placeholder.com/800x1000', 'Whispers of Spring', 'A serene piece capturing the first whispers of blooming petals in soft pastels.')">
       <img src="https://via.placeholder.com/400x500" alt="Art 1" class="w-full h-auto">
       <div class="p-4">
         <h2 class="text-xl font-semibold">Whispers of Spring</h2>
@@ -81,34 +102,40 @@
     </div>
 
     <!-- Sold Out Painting Card -->
-    <div class="relative bg-white rounded-xl shadow-md overflow-hidden sold-out card cursor-pointer" data-aos="zoom-in" data-aos-delay="200" onclick="openLightbox('https://via.placeholder.com/800x1000', 'Melancholy tones fading into silence')">
-      <img src="https://via.placeholder.com/400x500" alt="Art 2" class="w-full h-auto">
+    <div class="relative bg-white rounded-xl shadow-md overflow-hidden sold-out card cursor-pointer" data-aos="zoom-in" data-aos-delay="200" onclick="openLightbox('assets/paintings/couple.png', 'Faded Echoes', 'Muted tones narrating the echo of a fading memory. The piece is now sold out.', 'Nrs. 21000')">
+      <img src="assets/paintings/couple.png" alt="Art 2" class="w-full h-auto">
       <div class="p-4">
         <h2 class="text-xl font-semibold">Faded Echoes</h2>
         <p class="text-sm text-gray-500">Watercolor</p>
       </div>
     </div>
-
-    <!-- Add more cards as needed -->
   </main>
 
   <!-- Lightbox -->
-  <div id="lightbox" class="lightbox flex" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" alt="Enlarged painting">
-    <div id="lightbox-desc" class="lightbox-description"></div>
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="">
+      <div class="lightbox-description">
+        <h3 id="lightbox-title" class="text-xl font-bold mb-2"></h3>
+        <p id="lightbox-text"></p><br><br>
+        <b><i id="lightbox-price"></i></b>
+      </div>
+    </div>
   </div>
 
   <footer class="text-center text-xs text-gray-400 pb-6" data-aos="fade-up" data-aos-delay="300">
-    © 2025 [Your Name]. All rights reserved.
+    © 2025 Rusha. All rights reserved.
   </footer>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
     AOS.init({ duration: 800, once: true });
 
-    function openLightbox(src, desc) {
+    function openLightbox(src, title, text, price) {
       document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox-desc').textContent = desc || '';
+      document.getElementById('lightbox-title').textContent = title;
+      document.getElementById('lightbox-text').textContent = text;
+      document.getElementById('lightbox-price').textContent = price;
       document.getElementById('lightbox').style.display = 'flex';
     }
 
